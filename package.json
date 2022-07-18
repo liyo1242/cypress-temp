@@ -1,0 +1,33 @@
+{
+  "name": "Cypress-Test-Example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open",
+    "cy:verify": "cypress verify",
+    "test:ci:record:windows": "run-p --race start:ci:windows e2e:record",
+    "start:ci:windows": "serve --no-clipboard --listen 8080",
+    "e2e:record": "cypress run --record",
+    "e2e:test": "cypress run",
+    "e2e:test-reporter": "cypress run --browser chrome --reporter junit",
+    "postinstall": "husky install",
+    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "lint:prettier": "prettier --write --loglevel warn \"cypress/**/*.{js,json,tsx,md}\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^16.2.1",
+    "@commitlint/config-conventional": "^16.2.1",
+    "cypress-browser-permissions": "^1.1.0",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-localstorage-commands": "^1.6.1",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.5",
+    "prettier": "^2.5.1"
+  },
+  "dependencies": {
+    "cypress": "^9.5.1"
+  }
+}

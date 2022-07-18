@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.env
+*.xml
+cypress/videos
+cypress/reports
+cypress/results
+cypress/screenshots
+cypress.env.json
+.yarn
+.yarnrc.yml

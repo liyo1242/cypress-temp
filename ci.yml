@@ -1,0 +1,51 @@
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-20.04'
+
+pool:
+  vmImage: $(imageName)
+
+variables:
+  cypress_cache: "/home/vsts/.cache/Cypress"
+  yarn_config_cache: '$(HOME)/.cache/yarn'
+
+steps:
+- task: NodeTool@0
+  displayName: 'Use Node 14.x'
+  inputs:
+    versionSpec: 14.15.1
+
+- task: Cache@2
+  displayName: 'Cache Yarn Global Temp'
+  inputs:
+    key: 'version1 | yarn | "$(Agent.OS)" | yarn.lock'
+    path: '$(yarn_config_cache)'
+
+- task: Cache@2
+  displayName: 'Cache cypress'
+  inputs:
+    key: 'version1 | cypress | "$(Agent.OS)" | yarn.lock'
+    path: '$(cypress_cache)'
+    cacheHitVar: isCacheCypress
+
+- script: CYPRESS_INSTALL_BINARY=0 yarn install
+  displayName: 'Install YARN dependencies'
+  condition: eq(variables.isCacheCypress, 'true')
+
+- script: yarn install
+  displayName: 'Install YARN dependencies'
+  condition: eq(variables.isCacheCypress, 'false')
+
+- script: yarn cy:verify
+  displayName: 'Cypress verify'
+
+- script: yarn e2e:test-reporter
+  displayName: 'Run Cypress tests with Reporter'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results *.xml'
+  inputs:
+    testResultsFiles: 'cypress/reports/junit/*.xml'
+  continueOnError: true
+  condition: succeededOrFailed()
