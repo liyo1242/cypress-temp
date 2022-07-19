@@ -38,6 +38,30 @@ Project
 │  └─ ...
 ```
 
+## Example
+
+![domainExample.png](.asset/domainExample.png)
+
+```shell
+Project
+├─ ...
+├─ cypress
+│  ├─ ...
+│  ├─ integration
+│  │  ├─ Order
+│  │  │  ├─ CreateOrder.spec.js
+│  │  │  ├─ ResolveOrder.spec.js
+│  │  │  └─ ...
+│  │  └─ ...
+│  ├─ support
+│  │  ├─ OrderCreatePage.js
+│  │  ├─ OrderDetailPage.js
+│  │  ├─ ...
+│  │  ├─ command.js
+│  │  └─ index.js
+│  └─ ...
+```
+
 ## Useful Links
 
 ### Command Link
